@@ -34,7 +34,7 @@ repos:
         args: [
             --branch, dev,
             --branch, develop,
-            --branch, master,
+            --branch, main,
         ]
 
   - repo: https://github.com/asottile/pyupgrade
