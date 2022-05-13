@@ -1,0 +1,108 @@
+default_language_version:
+  python: python3.9
+
+
+files: ^agora/
+
+exclude:
+  ^.git/
+  ^__pycache__/
+
+fail_fast: true
+
+default_stages: [commit]
+
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: pretty-format-json
+        args: [
+            --autofix,
+            --indent 4,
+        ]
+      - id: trailing-whitespace
+      - id: no-commit-to-branch
+        args: [
+            --branch, dev,
+            --branch, develop,
+            --branch, master,
+        ]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.11.0
+    hooks:
+      - id: pyupgrade
+        args: [--py37-plus]
+        types: [python]
+
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        args: [
+            --in-place,
+            --remove-all-unused-imports,
+            --ignore-init-module-imports,
+            --remove-unused-variables,
+        ]
+        types: [python]
+
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.9.2
+    hooks:
+      - id: isort
+        name: Isort
+        additional_dependencies: [toml]
+        args: [
+            --sp=.isort.cfg
+        ]
+        stages:
+          - commit
+        types: [python]
+
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.1.0
+    hooks:
+      - id: add-trailing-comma
+        args: [--py36-plus]
+        stages:
+          - commit
+        types: [python]
+
+  - repo: https://github.com/asottile/yesqa
+    rev: v1.2.2
+    hooks:
+      - id: yesqa
+        additional_dependencies:
+          - flake8-builtins
+          - flake8-print
+          - flake8-debugger
+          - flake8-commas
+          - flake8-comprehensions
+          - flake8-eradicate
+          - flake8-django
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.0
+    hooks:
+      - id: flake8
+        args: [
+            --config=.flake8
+        ]
+        types: [python]
+        additional_dependencies:
+          - flake8-builtins
+          - flake8-print
+          - flake8-debugger
+          - flake8-commas
+          - flake8-comprehensions
+          - flake8-eradicate
