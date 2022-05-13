@@ -19,6 +19,9 @@ class Parser:
         self.base_url = BASE_URL
         self.session = requests.Session()
 
+    def get_latest_post(self):
+        return self.get_posts(limit=1)[0]
+
     def get_posts(self, limit: int = 10):
         url = f'{self.base_url}/ru/news/obyavleniya'
         response = self._perform_request('get', url)
@@ -62,3 +65,6 @@ class Parser:
         date = re.search(pattern, text).group()
         title = re.sub(pattern, '', text).strip()
         return title, datetime.strptime(date, '%d.%m.%Y').date()
+
+
+parser = Parser()
