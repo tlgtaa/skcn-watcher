@@ -13,7 +13,7 @@ Post = namedtuple('Post', field_names=['date', 'title', 'link'])
 
 
 class Parser:
-    DEFUALT_TIMEOUT = 3
+    DEFAULT_TIMEOUT = 3
 
     def __init__(self) -> None:
         self.base_url = BASE_URL
@@ -34,7 +34,7 @@ class Parser:
 
     @logger.catch
     def _perform_request(self, method: str, url: str, **kwargs):
-        timeout = kwargs.pop('timeout', self.DEFUALT_TIMEOUT)
+        timeout = kwargs.pop('timeout', self.DEFAULT_TIMEOUT)
         response = getattr(self.session, method)(url, timeout=timeout, **kwargs)
         response.raise_for_status()
 
